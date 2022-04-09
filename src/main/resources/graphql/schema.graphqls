@@ -1,0 +1,45 @@
+type User {
+    id: ID!,
+    email: String!,
+    name: String!
+    token: String
+}
+type Category {
+    id: ID!,
+    name: String!
+}
+type Region {
+    id: ID!,
+    name: String!
+}
+
+type Advertisement {
+    id: ID!,
+    category: Category!,
+    user: User!,
+    region: Region!,
+    description: String!
+}
+type Query {
+    advertisements(offset: Int = 0, limit: Int = 5):[Advertisement]
+    advertisement(id: ID!):Advertisement
+    advertisementsByUserId(userId: ID!):[Advertisement]
+    advertisementsByRegionId(regionId: ID!):[Advertisement]
+    advertisementsByCategoryId(categoryId: ID!):[Advertisement]
+    categories(offset: Int = 0, limit: Int = 5):[Category]
+    category(id: ID!):Category
+    category(name: String!):Category
+    regions(offset: Int = 0, limit: Int = 5):[Region]
+    region(id: ID!):Region
+    region(name: String!):Region
+    currentUser:User
+}
+type Mutation {
+    createAdvertisement(categoryId: Int!, regionId: Int!, price: Float!, description: String!):Advertisement
+    deleteAdvertisement(advertisementId: Int!): Boolean
+    createUser(email: String!, password: String!, name: String!): User
+    login(email: String!, password: String!): User
+    createCategory(name: String!): Category
+    createRegion(name: String!): Region
+    logout: Boolean
+}
